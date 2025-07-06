@@ -27,7 +27,23 @@ class TriviaViewController: UIViewController {
     addGradient()
     questionContainerView.layer.cornerRadius = 8.0
     // TODO: FETCH TRIVIA QUESTIONS HERE
+      TriviaQuestionService.fetchQuestion(amount:10) { triviaQuestion in
+              self.configure(with: triviaQuestion)
+          }
   }
+    
+    private func configure(with triviaQuestion: TriviaQuestion) {
+//        forecastImageView.image = forecast.weatherCode.image
+        questionLabel.text = triviaQuestion.question
+        categoryLabel.text = triviaQuestion.category
+        
+        let answers = ([triviaQuestion.correctAnswer] + triviaQuestion.incorrectAnswers).shuffled()
+            
+        answerButton0.setTitle(answers[0], for: .normal)
+        answerButton1.setTitle(answers[1], for: .normal)
+        answerButton2.setTitle(answers[2], for: .normal)
+        answerButton3.setTitle(answers[3], for: .normal)
+    }
   
   private func updateQuestion(withQuestionIndex questionIndex: Int) {
     currentQuestionNumberLabel.text = "Question: \(questionIndex + 1)/\(questions.count)"

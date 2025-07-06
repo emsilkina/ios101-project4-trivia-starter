@@ -11,7 +11,7 @@ class TriviaQuestionService {
   static func fetchQuestion (amount: Int,
                             completion: ((TriviaQuestion) -> Void)? = nil) {
       let parameters = "amount=\(amount)"
-      let url = URL(string: "https://opentdb.com/api.php?\(amount)")!
+      let url = URL(string: "https://opentdb.com/api.php?\(parameters)")!
       let task = URLSession.shared.dataTask(with: url) { data, response, error in
         // this closure is fired when the response is received
         guard error == nil else {
@@ -32,6 +32,12 @@ class TriviaQuestionService {
                   completion?(forecast) // call the completion closure and pass in the forecast data model
                 }
         // at this point, `data` contains the data received from the response
+          
+          let decoder = JSONDecoder()
+        let response = try! decoder.decode(Trivia.self, from: data)
+        DispatchQueue.main.async {
+          completion?(response.TriviaQuestion)
+        }
       }
       task.resume() // resume the task and fire the request
     }
