@@ -21,14 +21,16 @@ class TriviaViewController: UIViewController {
   private var questions = [TriviaQuestion]()
   private var currQuestionIndex = 0
   private var numCorrectQuestions = 0
+    private var numQuestions = 5
   
   override func viewDidLoad() {
     super.viewDidLoad()
     addGradient()
     questionContainerView.layer.cornerRadius = 8.0
     // TODO: FETCH TRIVIA QUESTIONS HERE
-      TriviaQuestionService.fetchQuestion(amount:10) { triviaQuestion in
-              self.configure(with: triviaQuestion)
+      TriviaQuestionService.fetchQuestions(amount:numQuestions) { triviaQuestions in
+          self.questions=triviaQuestions
+          self.updateQuestion(withQuestionIndex: self.currQuestionIndex)
           }
   }
     
@@ -38,11 +40,21 @@ class TriviaViewController: UIViewController {
         categoryLabel.text = triviaQuestion.category
         
         let answers = ([triviaQuestion.correctAnswer] + triviaQuestion.incorrectAnswers).shuffled()
-            
-        answerButton0.setTitle(answers[0], for: .normal)
-        answerButton1.setTitle(answers[1], for: .normal)
-        answerButton2.setTitle(answers[2], for: .normal)
-        answerButton3.setTitle(answers[3], for: .normal)
+        
+        if triviaQuestion.incorrectAnswers.count == 1 {
+            answerButton0.setTitle(answers[0], for: .normal)
+            answerButton1.setTitle(answers[1], for: .normal)
+            answerButton2.isHidden = true
+            answerButton3.isHidden = true
+        } else {
+            answerButton0.setTitle(answers[0], for: .normal)
+            answerButton1.setTitle(answers[1], for: .normal)
+            answerButton2.setTitle(answers[2], for: .normal)
+            answerButton3.setTitle(answers[3], for: .normal)
+            answerButton2.isHidden = false
+            answerButton3.isHidden = false
+        }
+        
     }
   
   private func updateQuestion(withQuestionIndex questionIndex: Int) {
@@ -66,6 +78,7 @@ class TriviaViewController: UIViewController {
       answerButton3.setTitle(answers[3], for: .normal)
       answerButton3.isHidden = false
     }
+      configure(with: question)
   }
   
   private func updateToNextQuestion(answer: String) {
@@ -92,6 +105,10 @@ class TriviaViewController: UIViewController {
       currQuestionIndex = 0
       numCorrectQuestions = 0
       updateQuestion(withQuestionIndex: currQuestionIndex)
+        TriviaQuestionService.fetchQuestions(amount:numQuestions) { triviaQuestions in
+            self.questions=triviaQuestions
+            self.updateQuestion(withQuestionIndex: self.currQuestionIndex)
+            }
     }
     alertController.addAction(resetAction)
     present(alertController, animated: true, completion: nil)
