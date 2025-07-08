@@ -1,20 +1,20 @@
-# Project 4 - *Name of App Here*
+# Project 4 - Trivia App
 
-Submitted by: **Your Name Here**
+Submitted by: Emily Silkina
 
-**Name of your app** is an app that ... [TODO] 
+Trivia App is an app that displays questions with answers for users to answer and receive a correctness score. 
 
-Time spent: **X** hours spent in total
+Time spent: 6 hours spent in total
 
 ## Required Features
 
 The following **required** functionality is completed:
 
-- [ ] User can view and answer at least 5 trivia questions.
-- [ ] App retrieves question data from the Open Trivia Database API.
-- [ ] Fetch a different set of questions if the user indicates they would like to reset the game.
-- [ ] Users can see score after submitting all questions.
-- [ ] True or False questions only have two options.
+- [X] User can view and answer at least 5 trivia questions.
+- [X] App retrieves question data from the Open Trivia Database API.
+- [X] Fetch a different set of questions if the user indicates they would like to reset the game.
+- [X] Users can see score after submitting all questions.
+- [X] True or False questions only have two options.
 
 
 The following **optional** features are implemented:
@@ -44,7 +44,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Emily Silkina]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
